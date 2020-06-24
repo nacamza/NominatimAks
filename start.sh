@@ -6,6 +6,17 @@ stopServices() {
 }
 trap stopServices TERM
 
+if [ -f /var/lib/postgresql/11/main/PG_VERSION ];
+then
+        echo "La BD existe"
+else
+        echo "La BD no existe"
+        cp -r /bd/* /var/lib/postgresql/11/main
+        chown -R postgres:postgres /var/lib/postgresql/11/main
+        chmod -R 700 /var/lib/postgresql/11/main
+        echo "BD copiada"
+fi
+
 service postgresql start
 service apache2 start
 
