@@ -6,7 +6,7 @@ stopServices() {
 }
 trap stopServices TERM
 
-if [ -f /var/lib/postgresql/11/main/PG_VERSION ];
+if [ -f /var/lib/postgresql/11/main/pg_hba.conf ];
 then
         echo "La BD existe"
 else
