@@ -97,7 +97,14 @@ az acr create \
     --name $ACR_NAME \
     --sku Standard
 ````
-
+## Configuración del clúster de AKS para autenticarse en el registro de contenedor
+Es necesario configurar la autenticación entre el registro de contenedor y el clúster de Kubernetes para permitir la comunicación entre los servicios. Puede configurar de forma automática la autenticación de la entidad de servicio necesaria entre los dos recursos si ejecuta el comando az aks update
+````
+az aks update \
+    --name $AKS_CLUSTER_NAME \
+    --resource-group $RESOURCE_GROUP \
+    --attach-acr $ACR_NAME
+````
 
 
 
