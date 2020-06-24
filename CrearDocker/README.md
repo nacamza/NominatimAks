@@ -24,3 +24,11 @@ az acr build \
     --registry $ACR_NAME \
     --image nominatim .
 ````
+### Comprobación de las imágenes
+Ejecute el comando siguiente para comprobar que las imágenes se han creado y almacenado en el registro
+````
+az acr repository list \
+    --name $ACR_NAME \
+    --output table
+````
+Si todo salió bien, tiene que aparecer una imagen llamada nominatim
