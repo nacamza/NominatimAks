@@ -6,6 +6,7 @@ RESOURCE_GROUP=aksworkshop
 VNET_NAME=aks-vnet
 SUBNET_NAME=aks-subnet
 AKS_CLUSTER_NAME=aksworkshop-nominatim
+ACR_NAME=cquirogaRegistry
 ````
 Dónde:
 -	REGION_NAME es la región donde se va a crear al clúster
@@ -13,6 +14,7 @@ Dónde:
 -	VNET_NAME es la red virtual a la que está conectada el clúster
 -	SUBNET_NAME  es la subred del clúster 
 -	AKS_CLUSTER_NAME Nombre del clúster AKS 
+-   ACR_NAME Nomber del registro de contenedores
 ## Crear grupo de recursos 
 Vamos a crear un grupo de recursos con el nombre **aksworkshop** alojado en la región  ** eastus**
 ````
@@ -86,6 +88,17 @@ Para ver los nodos del cluster use
 ````
 kubectl get nodes
 ````
+## Creación de un registro de contenedor
+Si no tiene un registro de contenedores tiene que crear uno
+````
+az acr create \
+    --resource-group $RESOURCE_GROUP \
+    --location $REGION_NAME \
+    --name $ACR_NAME \
+    --sku Standard
+````
+
+
 
 
 
