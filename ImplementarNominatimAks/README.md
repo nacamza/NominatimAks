@@ -15,9 +15,13 @@ kubectl apply \
     --namespace nominatim \
     -f azurefile-bd-nominatim.yaml
 ````
-En el archivo se configura una StorageClass llama azurefile, la misma se utiliza para crear los archivos de almacenamiento. Tambien se declara un PersistentVolumeClaim que genera azurefile de 10Gb llamado azurefile donde vamos a gurdar la base de datos
+En el archivo se configura un StorageClass llamado azurefile, la misma se utiliza para crear los archivos de almacenamiento azurefile. Ademas se declara un PersistentVolumeClaim que genera azurefile de 10Gb llamado azurefile donde vamos a guardar la base de datos.
+Por ultimo generamos un Pod llamado nominatim que va a descargar la imformacion de argentina y va a generar la base de datos.
 
+Podemos revisar si el Pod fue generado con el siguiente comando
+````
+kubectl get pods --namespace nominatim
+````
 
-
-### Crear la implementacion naminatim
+### Crear la implementacion nominatim
 Para la implementacion vamos a utilizar la implementacion llamada Statefulset ya que nos permite asignar un disco a cada pod, es este disco vamos a almacenar la base de datos de nominatim
