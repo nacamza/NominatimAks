@@ -75,5 +75,18 @@ Tenga en cuenta la siguiente configuración de implementación:
 -	--service-cidr: este intervalo de direcciones es el conjunto de direcciones IP virtuales que Kubernetes asigna a los servicios internos del clúster. No debe estar dentro del intervalo de direcciones IP de la red virtual del clúster. Debe ser diferente de la subred creada para los pods.
 -	--dns-service-ip: la dirección IP es para el servicio DNS del clúster. Esta dirección debe estar en el intervalo de direcciones del servicio de Kubernetes. No use la primera dirección IP en el intervalo de direcciones, como 0.1. La primera dirección del rango de la subred se usa para la dirección kubernetes.default.svc.cluster.local.
 -	--docker-bridge-address: la dirección de red del puente de Docker representa la dirección de red de puente docker0 predeterminada presente en todas las instalaciones de Docker. 
+## Prueba de la conectividad del clúster con kubectl
+Para recuperar las credenciales del clúster, ejecute el comando siguiente
+````
+az aks get-credentials \
+    --resource-group $RESOURCE_GROUP \
+    --name $AKS_CLUSTER_NAME
+````
+Para ver los nodos del cluster use 
+````
+kubectl get nodes
+````
+
+
 
 
