@@ -13,7 +13,7 @@ Para crear el AzureFile en el cluster aplicamos el siguiente archivo
 ````
 kubectl apply \
     --namespace nominatim \
-    -f azurefile-bd-nominatim.yaml
+    -f nominatim-crear-bd.yaml
 ````
 En el archivo se configura un StorageClass llamado azurefile, la misma se utiliza para crear los archivos de almacenamiento azurefile. Ademas se declara un PersistentVolumeClaim que genera azurefile de 10Gb llamado azurefile donde vamos a guardar la base de datos.
 Por ultimo generamos un Pod llamado nominatim que va a descargar la imformacion de argentina y va a generar la base de datos.
