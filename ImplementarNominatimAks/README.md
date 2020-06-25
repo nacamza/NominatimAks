@@ -118,11 +118,11 @@ kubectl apply \
 Para que el controlador de entrada de Kubernetes enrute las solicitudes al servicio nominatim, necesitará un recurso de entrada que habilite SSL/TLS.
 
 Edite el archivo nominatim-web-ingress.yaml.
-´´´´
+````
 nano nominatim-web-ingress.yaml
-´´´´
+````
 Pegue el siguiente texto en el archivo.
-´´´´
+````
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -143,7 +143,7 @@ spec:
               serviceName: nominatim
               servicePort: 80
             path: /
-´´´´
+````
 En este archivo, actualice el valor <ingress ip> de la clave host con la IP pública con guiones de la entrada que se ha recuperado antes    
     
 Aplique la configuración mediante el comando kubectl apply
@@ -236,6 +236,7 @@ spec:
         requests:
           storage: 10Gi
 ```` 
+
 
  
 
