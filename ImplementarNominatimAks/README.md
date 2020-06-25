@@ -302,10 +302,30 @@ Compruebe que el número de nodos ha aumentado.
 ````
 kubectl get nodes -w
 ````
+## Prueba de carga con el escalador automático
+Para crear la prueba de carga, puede usar una imagen pregenerada llamada azch/artillery que está disponible en Docker Hub. La imagen contiene una herramienta llamada artillery que se usa para enviar tráfico a la API.
 
-
-
-
+En Azure Cloud Shell, almacene el punto de conexión de la prueba de carga de la API de front-end en una variable de Bash y reemplace <frontend hostname> por el nombre de host de entrada expuesto
+    
+````
+LOADTEST_API_ENDPOINT=https://nominatim.<ip cluster>.nip.io//search?q=mendoza&format=json&limit=1
+````
+Ejecute la prueba de carga con el siguiente comando 
+````
+az container create \
+    -g $RESOURCE_GROUP \
+    -n loadtest \
+    --cpu 4 \
+    --memory 1 \
+    --image azch/artillery \
+    --restart-policy Never \
+    --command-line "artillery quick -r 500 -d 120 $LOADTEST_API_ENDPOINT"
+````
+Observe el funcionamiento del escalador automático horizontal de pod.
+````
+kubectl get hpa \
+  --namespace nominatim -w
+````
 
 
 
