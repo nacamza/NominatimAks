@@ -31,7 +31,7 @@ spec:
       volumes:
         - name: nominatim-bd-arg
           persistentVolumeClaim:
-            claimName: azurefile
+            claimName: nominatim-bd-arg
       containers:
         - name: nominatim
           image: cquirogaRegistry.azurecr.io/nominatim-arg
