@@ -22,7 +22,7 @@ Ahora podemos construir la imagen
 az acr build \
     --resource-group $RESOURCE_GROUP \
     --registry $ACR_NAME \
-    --image nominatim .
+    --image nominatim-arg .
 ````
 ### Comprobación de las imágenes
 Ejecute el comando siguiente para comprobar que las imágenes se han creado y almacenado en el registro
