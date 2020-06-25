@@ -1,0 +1,55 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: azurefile
+  namespace: nominatim
+provisioner: kubernetes.io/azure-file
+mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=0
+  - gid=0
+  - mfsymlinks
+  - cache=strict
+parameters:
+  skuName: Standard_LRS
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nominatim-bd-arg
+  namespace: nominatim
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: azurefile
+  resources:
+    requests:
+      storage: 10Gi 
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nominatim-crear-bd
+  namespace: nominatim
+  labels:
+    app: nominatim-crear-bd
+spec:
+  containers:
+    - name: nominatim-crear-bd
+      image: cquirogaRegistry.azurecr.io/nominatim-arg
+      command: ["sh", "/app/init.sh"]
+      resources:
+        requests:
+          cpu: 250m
+          memory: 128Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+      volumeMounts:
+        - mountPath: "/dataazure"
+          name: volume
+  volumes:
+    - name: volume
+      persistentVolumeClaim:
+        claimName: nominatim-bd-arg
