@@ -239,7 +239,7 @@ spec:
 La implementación utiliza la imagen **nominatim-arg** que esta almacenada en el contenedor **cquirogaRegistry**, ejecuta el script start.sh y monta dos volúmenes por cada pod. El volumen llamado **nominatim-bd-arg** es el que contiene la base de datos y el llamado **volumen** es el utilizado por cada pod para guardar la base de datos.
 
 # Configurar el escalado automático
-## Escalado automatico horizontal
+## Escalado automático horizontal
 El controlador de escalador automático de pod horizontal (HPA) es un bucle de control de Kubernetes que permite al administrador de controladores de Kubernetes consultar el uso de recursos con las métricas especificadas en una definición de HorizontalPodAutoscaler.
 
 El controlador HPA permite a AKS detectar cuándo los pods implementados necesitan más recursos en función de métricas como la CPU. Después, HPA puede programar más pods en el clúster para hacer frente a la demanda.
@@ -269,7 +269,7 @@ spec:
           type: Utilization
           averageUtilization: 30
 ````
-Donde:
+Dónde:
 - Réplicas mínimas y máximas: Indica el número mínimo y máximo de réplicas que se van a implementar.
 - Métricas: La métrica de escalado automático que se supervisa es el uso de CPU, establecido en un 30 %. Cuando el uso supera ese nivel, el HPA crea más réplicas.
 
@@ -279,7 +279,7 @@ kubectl apply \
     --namespace nominatim \
     -f nominatim-api-hpa.yaml
 ````    
-Para ver la carga de la implementacion utilice el siguiente comando
+Para ver la carga de la implementación utilice el siguiente comando
 ````
 kubectl get hpa \
   --namespace nominatim -w
@@ -302,6 +302,7 @@ Compruebe que el número de nodos ha aumentado.
 ````
 kubectl get nodes -w
 ````
+
 
 
 
