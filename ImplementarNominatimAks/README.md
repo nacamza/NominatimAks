@@ -238,6 +238,73 @@ spec:
 ```` 
 La implementación utiliza la imagen **nominatim-arg** que esta almacenada en el contenedor **cquirogaRegistry**, ejecuta el script start.sh y monta dos volúmenes por cada pod. El volumen llamado **nominatim-bd-arg** es el que contiene la base de datos y el llamado **volumen** es el utilizado por cada pod para guardar la base de datos.
 
+# Configurar el escalado automático
+## Escalado automatico horizontal
+El controlador de escalador automático de pod horizontal (HPA) es un bucle de control de Kubernetes que permite al administrador de controladores de Kubernetes consultar el uso de recursos con las métricas especificadas en una definición de HorizontalPodAutoscaler.
+
+El controlador HPA permite a AKS detectar cuándo los pods implementados necesitan más recursos en función de métricas como la CPU. Después, HPA puede programar más pods en el clúster para hacer frente a la demanda.
+
+Edite el archivo nominatim-api-hpa.yaml
+````
+nano nominatim-api-hpa.yaml
+````
+El archivo tiene el siguiente contenido 
+````
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nominatim
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: nominatim
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 30
+````
+Donde:
+- Réplicas mínimas y máximas: Indica el número mínimo y máximo de réplicas que se van a implementar.
+- Métricas: La métrica de escalado automático que se supervisa es el uso de CPU, establecido en un 30 %. Cuando el uso supera ese nivel, el HPA crea más réplicas.
+
+Aplique el archivo
+````
+kubectl apply \
+    --namespace nominatim \
+    -f nominatim-api-hpa.yaml
+````    
+Para ver la carga de la implementacion utilice el siguiente comando
+````
+kubectl get hpa \
+  --namespace nominatim -w
+````
+## Escalado vertical 
+Use el comando az aks update para habilitar el escalador automático del clúster. Especifique un valor máximo y otro mínimo para el número de nodos. Asegúrese de usar el mismo grupo de recursos anterior, por ejemplo aksworkshop.
+
+En el ejemplo siguiente se establece --min-count en 1 y --max-count en 5.
+````
+az aks update \
+--resource-group $RESOURCE_GROUP \
+--name $AKS_CLUSTER_NAME  \
+--enable-cluster-autoscaler \
+--min-count 1 \
+--max-count 5
+````
+En unos minutos, el clúster se debe configurar con el escalador automático del clúster.
+
+Compruebe que el número de nodos ha aumentado.
+````
+kubectl get nodes -w
+````
+
+
+
 
 
 
