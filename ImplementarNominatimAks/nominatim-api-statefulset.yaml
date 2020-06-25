@@ -29,7 +29,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 5
       volumes:
-        - name: azurefile
+        - name: nominatim-bd-arg
           persistentVolumeClaim:
             claimName: azurefile
       containers:
@@ -43,7 +43,7 @@ spec:
           volumeMounts:
             - name: volumen
               mountPath: /var/lib/postgresql/11/main
-            - name: azurefile
+            - name: nominatim-bd-arg
               mountPath: /data
           resources:
             requests: # minimum resources required
