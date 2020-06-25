@@ -7,11 +7,11 @@ En el mismo va a encontrar tres carpetas, las cuales contienen la explicación y
 
 A continuación damos una pequeña explicación del contenido de cada carpeta:
 
-1 CrearAks: en la misma se explica cómo crear un clúster kubernetes y un registro de contenedor para guardar nuestras imágenes doker.
+- CrearAks: en la misma se explica cómo crear un clúster kubernetes y un registro de contenedor para guardar nuestras imágenes doker.
 
-2 CrearDocker: en esta carpeta se explica cómo generar una imagen docker de nominatim.
+- CrearDocker: en esta carpeta se explica cómo generar una imagen docker de nominatim.
 
-3 ImplementarNominatimAks: en esta carpeta se explica cómo implementar el servicio de nominatim en el clúster.
+- ImplementarNominatimAks: en esta carpeta se explica cómo implementar el servicio de nominatim en el clúster.
 
 
 
