@@ -1,5 +1,7 @@
 ## Implementación de Kubernetes con Azure Kubernetes Service
+Este instructivo está basado en un taller de azure, si necesita más información puede buscarla en https://docs.microsoft.com/es-es/learn/modules/aks-workshop/01-introduction
 ### Vamos a definir las siguientes variables de estado
+Estas variables van a facilitar la implementación 
 ````
 REGION_NAME=eastus
 RESOURCE_GROUP=aksworkshop
@@ -9,21 +11,21 @@ AKS_CLUSTER_NAME=aksworkshop-nominatim
 ACR_NAME=cquirogaRegistry
 ````
 Dónde:
--	REGION_NAME es la región donde se va a crear al clúster
--	RESOURCE_GROUP es el grupo de recursos donde se va a crear el clúster
--	VNET_NAME es la red virtual a la que está conectada el clúster
--	SUBNET_NAME  es la subred del clúster 
--	AKS_CLUSTER_NAME Nombre del clúster AKS 
--   ACR_NAME Nomber del registro de contenedores
+-	REGION_NAME: es la región donde se va a crear al clúster
+-	RESOURCE_GROUP: es el grupo de recursos donde se va a crear el clúster
+-	VNET_NAME: es la red virtual a la que está conectada el clúster
+-	SUBNET_NAME:  es la subred del clúster 
+-	AKS_CLUSTER_NAME: Nombre del clúster AKS 
+-   ACR_NAME: Nomber del registro de contenedores
 ## Crear grupo de recursos 
-Vamos a crear un grupo de recursos con el nombre **aksworkshop** alojado en la región  ** eastus**
+Vamos a crear un grupo de recursos en donde vamos a crear el cluster, con el nombre **aksworkshop** alojado en la región  ** eastus**
 ````
 az group create \
     --name $RESOURCE_GROUP \
     --location $REGION_NAME
 ````
 ## Crear red para el clúster
-En primer lugar, cree una red virtual y una subred. A los pods que se implementan en el clúster se les asignará una dirección IP de esta subred.
+En primer lugar, vamos a crear una red virtual y una subred. A los pods que se implementan en el clúster se les asignará una dirección IP de esta subred.
 ````
 az network vnet create \
     --resource-group $RESOURCE_GROUP \
@@ -33,7 +35,7 @@ az network vnet create \
     --subnet-name $SUBNET_NAME \
     --subnet-prefix 10.240.0.0/16
 ```` 
-Después, recupere y almacene el id. de subred en una variable de Bash mediante la ejecución del comando siguiente
+Después, recupere y almacene el id. de subred en una variable de Bash mediante la ejecución del siguiente comando 
 ````
 SUBNET_ID=$(az network vnet subnet show \
     --resource-group $RESOURCE_GROUP \
@@ -104,7 +106,8 @@ az aks update \
     --name $AKS_CLUSTER_NAME \
     --resource-group $RESOURCE_GROUP \
     --attach-acr $ACR_NAME
-````
+```` 
+
 
 
 
