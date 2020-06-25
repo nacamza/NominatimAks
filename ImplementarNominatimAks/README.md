@@ -19,7 +19,7 @@ kubectl apply \
     -f azurefile-bd-nominatim.yaml
 ````
 En el archivo se configura un StorageClass llamado azurefile, la misma se utiliza para crear archivos de almacenamiento azurefile. Ademas se declara un PersistentVolumeClaim que genera azurefile de 10Gb llamado **nominatim-bd-arg** donde vamos a guardar la base de datos.
-Por ultimo generamos un Pod llamado nominatim-crear-bd que va a descargar la informacion de argentina y generar la base de datos.
+Por ultimo generamos un Pod llamado nominatim-crear-bd que va a descargar la información de argentina y generar la base de datos.
 
 Podemos revisar si el Pod fue generado con el siguiente comando
 ````
@@ -54,7 +54,7 @@ Ahora, se comprobará la IP pública del servicio de entrada. El servicio tarda 
 ````
 kubectl get service nginx-ingress-controller --namespace ingress -w
 ````
-Guarde esta IP ya que la usaremos mas adelante.
+Guarde esta IP ya que la usaremos más adelante.
 ### Crear de un recurso de entrada para el servicio web de nominatim
 #### Implementación de cert-manager
 **Cert-manager** es un controlador de administración de certificados de Kubernetes que permite automatizar la administración de certificados en entornos nativos en la nube. cert-manager admite varios orígenes, entre los que se incluyen Let's Encrypt, HashiCorp Vault, Venafi, pares de clave de firma simples o certificados autofirmados.
@@ -157,15 +157,15 @@ Compruebe que el certificado se haya emitido.
 kubectl describe cert ratings-web-cert --namespace nominatim
 ````
 
-# Crear la implementacion nominatim
-Para crear la implementacion Nominatim aplique el siguiente archivo
+# Crear la implementación nominatim
+Para crear la implementación Nominatim aplique el siguiente archivo
 ````
 kubectl apply \
     --namespace nominatim \
     -f nominatim-api-statefulset.yaml
 ````
 En este archivo se realizan todos los cambios necesarios en el cluster para realizar la implementacion nominatim, a continuacion datallamos cada paso.
-### Confiuracion de la aplicacion para usar ClusterIP
+### Configuración de la aplicación para usar ClusterIP
 Como la implementación se va a exponer mediante el servicio de entrada, no es necesario usar una IP pública para el servicio. 
 ````
 apiVersion: v1
@@ -182,7 +182,7 @@ spec:
   type: ClusterIP
 ````
 ### Statefulset
-Para la aplicacion nominatim vamos a utilizar una implementacion llamada Statefulset, este tipo de implementacion permite que cada pod de la aplicacion tenga un disco unico, esto es util ya que vamos a usar este disco para almacenar la base de datos de nominatim. 
+Para la aplicación nominatim vamos a utilizar una implementación llamada Statefulset, este tipo de implementación permite que cada pod de la aplicación tenga un disco único, esto es util ya que vamos a usar este disco para almacenar la base de datos de nominatim. 
 ````
 apiVersion: apps/v1
 kind: StatefulSet
@@ -235,7 +235,8 @@ spec:
       resources:
         requests:
           storage: 10Gi
-````
+```` 
+
  
 
 
