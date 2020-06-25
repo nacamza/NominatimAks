@@ -11,7 +11,7 @@ cd CrearDocker
 Vamos a generar la imagen en Azure Container Registry, para esto, generamos las siguientes variables de entorno
 ````
 REGION_NAME=eastus
-RESOURCE_GROUP=aksworkshop
+RESOURCE_GROUP=myResourceGroup
 VNET_NAME=aks-vnet
 SUBNET_NAME=aks-subnet
 AKS_CLUSTER_NAME=aksworkshop-nominatim
@@ -31,4 +31,4 @@ az acr repository list \
     --name $ACR_NAME \
     --output table
 ````
-Si todo salió bien, tiene que aparecer una imagen llamada nominatim
+Si todo salió bien, tiene que aparecer una imagen llamada nominatim-arg
