@@ -202,9 +202,9 @@ spec:
     spec:
       terminationGracePeriodSeconds: 5
       volumes:
-        - name: azurefile
+        - name: nominatim-bd-arg
           persistentVolumeClaim:
-            claimName: azurefile
+            claimName: nominatim-bd-arg
       containers:
         - name: nominatim
           image: cquirogaRegistry.azurecr.io/nominatim-arg
@@ -216,7 +216,7 @@ spec:
           volumeMounts:
             - name: volumen
               mountPath: /var/lib/postgresql/11/main
-            - name: azurefile
+            - name: nominatim-bd-arg
               mountPath: /data
           resources:
             requests: # minimum resources required
@@ -236,6 +236,12 @@ spec:
         requests:
           storage: 10Gi
 ```` 
+La implementacino utiliza la imagen **nominatim-arg** que esta almacenada en el contenedor **cquirogaRegistry**, ejecuta el script start.sh y monta dos volumenes por cada pod. El volumen llamado **nominatim-bd-arg** es el que contiene la base de datos y el llamado **volumen** es el utilizado por cada pod para guardar la base de datos.
+
+
+
+
+
 
 
  
