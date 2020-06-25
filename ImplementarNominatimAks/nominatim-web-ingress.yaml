@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: nominatim-web-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+    - hosts:
+        - nominatim.<ingress ip>.nip.io 
+      secretName: nominatim-web-cert
+  rules:
+    - host: nominatim.<ingress ip>.nip.io 
+      http:
+        paths:
+          - backend:
+              serviceName: nominatim
+              servicePort: 80
+            path: /
