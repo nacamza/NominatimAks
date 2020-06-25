@@ -236,7 +236,7 @@ spec:
         requests:
           storage: 10Gi
 ```` 
-La implementacino utiliza la imagen **nominatim-arg** que esta almacenada en el contenedor **cquirogaRegistry**, ejecuta el script start.sh y monta dos volumenes por cada pod. El volumen llamado **nominatim-bd-arg** es el que contiene la base de datos y el llamado **volumen** es el utilizado por cada pod para guardar la base de datos.
+La implementación utiliza la imagen **nominatim-arg** que esta almacenada en el contenedor **cquirogaRegistry**, ejecuta el script start.sh y monta dos volúmenes por cada pod. El volumen llamado **nominatim-bd-arg** es el que contiene la base de datos y el llamado **volumen** es el utilizado por cada pod para guardar la base de datos.
 
 
 
