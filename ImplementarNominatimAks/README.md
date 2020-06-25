@@ -16,7 +16,7 @@ Para generar la base de datos aplique el siguiente archivo (tarda unas 7 horas e
 ````
 kubectl apply \
     --namespace nominatim \
-    -f azurefile-bd-nominatim.yaml
+    -f nominatim-crear-bd.yaml
 ````
 En el archivo se configura un StorageClass llamado azurefile, la misma se utiliza para crear archivos de almacenamiento azurefile. Ademas se declara un PersistentVolumeClaim que genera azurefile de 10Gb llamado **nominatim-bd-arg** donde vamos a guardar la base de datos.
 Por ultimo generamos un Pod llamado nominatim-crear-bd que va a descargar la información de argentina y generar la base de datos.
