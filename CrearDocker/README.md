@@ -12,9 +12,6 @@ Vamos a generar la imagen en Azure Container Registry, para esto, generamos las 
 ````
 REGION_NAME=eastus
 RESOURCE_GROUP=myResourceGroup
-VNET_NAME=aks-vnet
-SUBNET_NAME=aks-subnet
-AKS_CLUSTER_NAME=aksworkshop-nominatim
 ACR_NAME=cquirogaRegistry
 ````
 Ahora podemos construir la imagen
