@@ -2,8 +2,6 @@ OSMFILE=/data/argentina-latest.osm.pbf
 PGDIR=postgresdata
 THREADS=4
 
-mkdir -p /data && \
-
 sudo curl http://download.geofabrik.de/south-america/argentina-latest.osm.pbf --output $OSMFILE
 
 rm -rf /data/$PGDIR && \
@@ -23,4 +21,4 @@ sudo -u nominatim ./src/build/utils/setup.php --osm-file $OSMFILE --all --thread
 sudo -u postgres /usr/lib/postgresql/11/bin/pg_ctl -D /data/$PGDIR stop && \
 sudo chown -R postgres:postgres /data/$PGDIR
 
-mv /data/* /dataazure
+cp -r /data/* /dataazure
