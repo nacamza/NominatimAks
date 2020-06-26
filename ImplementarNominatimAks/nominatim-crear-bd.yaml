@@ -55,7 +55,7 @@ spec:
           ports:
             - containerPort: 8080
             - containerPort: 5432
-          command: ["sh", "/app/start.sh"]
+          command: ["sh", "/app/init.sh"]
           volumeMounts:
             - name: volumen
               mountPath: /data
