@@ -27,29 +27,54 @@ spec:
     requests:
       storage: 10Gi 
 ---
-kind: Pod
-apiVersion: v1
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
-  name: nominatim-crear-bd
+  name: nominatim
   namespace: nominatim
-  labels:
-    app: nominatim-crear-bd
-spec:
-  containers:
-    - name: nominatim-crear-bd
-      image: cquirogaRegistry.azurecr.io/nominatim-arg
-      command: ["sh", "/app/init.sh"]
+spec:  
+  selector:
+    matchLabels:
+      app: nominatim
+  serviceName: "nominatim"
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: nominatim
+    spec:
+      terminationGracePeriodSeconds: 5
+      volumes:
+        - name: nominatim-bd-arg
+          persistentVolumeClaim:
+            claimName: nominatim-bd-arg
+      containers:
+        - name: nominatim
+          image: cquirogaRegistry.azurecr.io/nominatim-arg
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+            - containerPort: 5432
+          command: ["sh", "/app/start.sh"]
+          volumeMounts:
+            - name: volumen
+              mountPath: /data
+            - name: nominatim-bd-arg
+              mountPath: /dataazure
+          resources:
+            requests: # minimum resources required
+              cpu: 250m
+              memory: 64Mi
+            limits: # maximum resources allocated
+              cpu: 500m
+              memory: 512Mi
+
+  volumeClaimTemplates:
+  - metadata:
+      name: volumen
+    spec:
+      accessModes: 
+        - ReadWriteOnce
       resources:
         requests:
-          cpu: 250m
-          memory: 128Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
-      volumeMounts:
-        - mountPath: "/dataazure"
-          name: volume
-  volumes:
-    - name: volume
-      persistentVolumeClaim:
-        claimName: nominatim-bd-arg
+          storage: 10Gi
