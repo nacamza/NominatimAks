@@ -2,6 +2,8 @@ OSMFILE=/data/argentina-latest.osm.pbf
 PGDIR=postgresdata
 THREADS=1
 
+mkdir -p /data && \
+
 sudo curl http://download.geofabrik.de/south-america/argentina-latest.osm.pbf --output $OSMFILE
 
 rm -rf /data/$PGDIR && \
