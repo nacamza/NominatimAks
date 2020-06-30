@@ -8,14 +8,16 @@ stopServices() {
 }
 trap stopServices TERM
 
-#sudo curl http://download.geofabrik.de/south-america/argentina-latest.osm.pbf --output $OSMFILE
-sudo curl http://download.geofabrik.de/asia/maldives-latest.osm.pbf --output $OSMFILE
+echo "Descargo mapa Arg"
+sudo curl http://download.geofabrik.de/south-america/argentina-latest.osm.pbf --output $OSMFILE
+#sudo curl http://download.geofabrik.de/asia/maldives-latest.osm.pbf --output $OSMFILE
 
 rm -rf /data/$PGDIR && \
 mkdir -p /data/$PGDIR && \
 
 chown postgres:postgres /data/$PGDIR && \
 
+echo "Inicio generar bd"
 export  PGDATA=/data/$PGDIR  && \
 sudo -u postgres /usr/lib/postgresql/11/bin/initdb -D /data/$PGDIR && \
 sudo -u postgres /usr/lib/postgresql/11/bin/pg_ctl -D /data/$PGDIR start && \
@@ -28,8 +30,14 @@ sudo -u nominatim ./src/build/utils/setup.php --osm-file $OSMFILE --all --thread
 sudo -u postgres /usr/lib/postgresql/11/bin/pg_ctl -D /data/$PGDIR stop && \
 sudo chown -R postgres:postgres /data/$PGDIR
 
+echo "Bd generada"
+
 cp -r /data/* /dataazure
 rm -r /data/*
+
+echo "Bd copiada" 
+
+echo "Listo" 
 
 service postgresql start
 service apache2 start
