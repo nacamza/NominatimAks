@@ -2,7 +2,14 @@ OSMFILE=/data/argentina-latest.osm.pbf
 PGDIR=postgresdata
 THREADS=1
 
-sudo curl http://download.geofabrik.de/south-america/argentina-latest.osm.pbf --output $OSMFILE
+stopServices() {
+        service apache2 stop
+        service postgresql stop
+}
+trap stopServices TERM
+
+#sudo curl http://download.geofabrik.de/south-america/argentina-latest.osm.pbf --output $OSMFILE
+sudo curl http://download.geofabrik.de/asia/maldives-latest.osm.pbf --output $OSMFILE
 
 rm -rf /data/$PGDIR && \
 mkdir -p /data/$PGDIR && \
@@ -23,3 +30,10 @@ sudo chown -R postgres:postgres /data/$PGDIR
 
 cp -r /data/* /dataazure
 rm -r /data/*
+
+service postgresql start
+service apache2 start
+
+# fork a process and wait for it
+tail -f /var/log/postgresql/postgresql-11-main.log &
+wait
