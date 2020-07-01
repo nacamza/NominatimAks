@@ -27,9 +27,9 @@ Dentro de la imagen, se encuentran dos scripts .sh, uno sirve para crear la base
 ### Generar la base de datos (init.sh)
 El script init.sh es el encargado de generar la base de datos de nominatim, la misma se genera a partir de un archivo que se descarga de internet, en nuestro caso vamos a generar la base de datos para Argentina
 
-El script genera la base de datos dentro del mismo docker, una vez generada, la copia a la carpeta **dataazure**. La carpeta **dataazure** no pertenece al docker, la misma de tiene montar cuando se genera el docker. 
+El script genera la base de datos en un disco montado como **data**, una vez generada, la copia a la carpeta **dataazure**. La carpeta **dataazure** es un azurefile. 
 
-Si se quiere generar la base de datos de otro país, se tiene que reemplazar la url de descarga en el script con la url deseada 
+Si se quiere generar la base de datos de otro país, se tiene que reemplazar, en el archivo init.sh la url de descarga en el script con la url deseada 
 ````
 sudo curl http://download.geofabrik.de/south-america/argentina-latest.osm.pbf --output $OSMFILE
 ````

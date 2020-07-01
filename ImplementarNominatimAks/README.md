@@ -166,7 +166,7 @@ kubectl apply \
 ````
 En este archivo se realizan todos los cambios necesarios en el cluster para realizar la implementacion nominatim, a continuacion datallamos cada paso.
 ### Configuración de la aplicación para usar ClusterIP
-Como la implementación se va a exponer mediante el servicio de entrada, no es necesario usar una IP pública para el servicio. 
+Como la implementación se va a exponer mediante el servicio de entrada, no es necesario usar una IP pública para el servicio. Por esto se utiliza ClusterIP que permite conectar la aplicación al servicio nginx  
 ````
 apiVersion: v1
 kind: Service
