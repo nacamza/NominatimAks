@@ -11,28 +11,6 @@ Para ver los espacios de nombres en el clúster
 ````
 kubectl get namespace
 ````
-# Crear base de datos para nominatim
-Para generar la base de datos aplique el siguiente archivo (tarda unas 7 horas en el caso de Argentina) 
-````
-kubectl apply \
-    --namespace nominatim \
-    -f nominatim-crear-bd.yaml
-````
-En el archivo se configura un StorageClass llamado azurefile, la misma se utiliza para crear archivos de almacenamiento azurefile. Ademas se declara un PersistentVolumeClaim que genera azurefile de 10Gb llamado **nominatim-bd-arg** donde vamos a guardar la base de datos.
-Por ultimo generamos un Pod llamado nominatim-crear-bd que va a descargar la información de argentina y generar la base de datos.
-
-Podemos revisar si el Pod fue generado con el siguiente comando
-````
-kubectl get pods --namespace nominatim
-````
-Si queremos entrar al pod usamos y ver si genero la base de datos usamos
-````
-kubectl exec -it nominatim-crear-bd --namespace nominatim -- /bin/bash
-````
-Una vez que se genera la base de datos se puede elininar el pod con el siguiente comando
-````
-kubectl delete pod nominatim-crear-bd --namespace nominatim
-````
 # Implementación de un controlador de entrada NGINX con Helm
 Helm es un administrador de paquetes de aplicación para Kubernetes. Ofrece una manera fácil de implementar aplicaciones y servicios mediante gráficos.
 
@@ -156,7 +134,30 @@ Compruebe que el certificado se haya emitido.
 ````
 kubectl describe cert ratings-web-cert --namespace nominatim
 ````
+# Crear base de datos para nominatim
+Para generar la base de datos aplique el siguiente archivo (tarda unas 7 horas en el caso de Argentina) 
+````
+kubectl apply \
+    --namespace nominatim \
+    -f nominatim-crear-bd.yaml
+````
+En el archivo se configura un StorageClass llamado azurefile, la misma se utiliza para crear archivos de almacenamiento azurefile. Ademas se declara un PersistentVolumeClaim que genera azurefile de 10Gb llamado **nominatim-bd-arg** donde vamos a guardar la base de datos.
+Por ultimo generamos un Statefulset llamado nominatim-0 que va a descargar la información de argentina y generar la base de datos.
 
+Podemos revisar si el Pod fue generado con el siguiente comando
+````
+kubectl get pods --namespace nominatim
+````
+Para ver el proceso de generación de la base de datos podemos consultar el log
+````
+kubectl logs nominatim-0 --namespace nominatim
+````
+Cuando la base esta creada y copiada al azurefile aparecen los mensajes **Bd copiada** y **Listo**.
+
+Una vez que se genera la base de datos se puede eliminar el pod con el siguiente comando
+````
+kubectl delete statefulset nominatim-0 --namespace nominatim
+````
 # Crear la implementación nominatim
 Para crear la implementación Nominatim aplique el siguiente archivo
 ````
